@@ -78,7 +78,7 @@ const rigs = {
   },
   rock: {
     guitar: {
-      guitarName: "Stratocaster",
+      guitarName: "Les Paul",
       imgFile: "./images/rock/les-paul.png",
     },
     amp: {
