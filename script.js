@@ -213,6 +213,7 @@ const ampEle = document.querySelector("#amp");
 const cabEle = document.querySelector("#cab");
 const pedalsEle = document.querySelector("#pedals");
 
+// Searches object to retrieve values
 const recursiveSearch = (obj, searchKey, results = []) => {
   const r = results;
   Object.keys(obj).forEach((key) => {
@@ -226,7 +227,7 @@ const recursiveSearch = (obj, searchKey, results = []) => {
   return r;
 };
 
-// Nav event gets genre name from nav menu and runs corelating genre rig function.
+// Nav event gets genre name from nav menu and runs correlating genre rig function.
 const guitarRig = (e) => {
   const genre = e.target.id;
   const rig = rigs[genre];
@@ -264,12 +265,14 @@ const guitarRig = (e) => {
   }
 };
 
+// Removes child nodes of parent
 const removeAllChildNodes = (parent) => {
   while (parent.firstChild){
     parent.removeChild(parent.firstChild);
   }
 }
 
+// If elements are loaded to the DOM removes them
 const removeRig = () => {
   const genreChildren = true;
   switch (genreChildren) {
@@ -286,21 +289,8 @@ const removeRig = () => {
       break;
   }
 }
-//  Intially writen to check to see if object was present
-// replaced by Nullish Coalescing Operator ??
-// const isAnObject = true;
-// const isNotObject = false;
 
-// const isObj = (obj) => {
-//   if (typeof obj === "object" && obj !== null){
-//     return isAnObject;
-//   } else { 
-//     return isNotObject;
-//   }
-// };
-
-
-
+// Checks if property is present. If property is present runs the fucntion to load the values.
 const loadRig = ({ rig, guitar, amp, pedals, cab }) => {
   loadGuitar(guitar);
     if (rig??amp) {
@@ -312,17 +302,8 @@ const loadRig = ({ rig, guitar, amp, pedals, cab }) => {
     if (rig??pedals) {
       loadPedals(pedals);
     }
-    // if (isObj(amp)) {
-    //   loadAmp(amp);
-    // }
-    // if (isObj(cab)) {
-    //   loadCab(cab);
-    // }
-    // if (isObj(pedals)) {
-    //   loadPedals(pedals);
-    // }
 }    
- 
+//  Adds guitar elements to the DOM
 const loadGuitar = ({ guitarName, imgFile }) => {
   const guitarNameEle = document.createElement("p");
   guitarNameEle.textContent = guitarName;
@@ -332,6 +313,7 @@ const loadGuitar = ({ guitarName, imgFile }) => {
   guitarEle.appendChild(guitarImg);
 }
 
+//  Adds amp elements to the DOM
 const loadAmp = ({ ampName, imgFile }) => {
   const ampNameEle = document.createElement("p");
   ampNameEle.textContent = ampName;
@@ -341,6 +323,7 @@ const loadAmp = ({ ampName, imgFile }) => {
     ampEle.appendChild(ampImg);
 }
 
+//  Adds cab elements to the DOM
 const loadCab = ({ cabName, imgFile }) => {
   const cabNameEle = document.createElement("p");
   cabNameEle.textContent = cabName;
@@ -350,6 +333,7 @@ const loadCab = ({ cabName, imgFile }) => {
   cabEle.appendChild(cabImg);
 }
 
+//  Adds pedal elements to the DOM
 const loadPedal = (namePedalsArray, imgPedalsArray) => {
   namePedalsArray.forEach((name, index) => {
     const path = imgPedalsArray[index];
@@ -365,10 +349,11 @@ const loadPedal = (namePedalsArray, imgPedalsArray) => {
 });
 }
 
+// Calls recursiveSearch function to retrieve pedal values
 const loadPedals = (pedals) => {
   namePedalsArray = recursiveSearch(pedals, "pedalName");
   imgPedalsArray = recursiveSearch(pedals, "imgFile");
   loadPedal(namePedalsArray, imgPedalsArray);
 }
-
+// Nav menu event listener
 nav.addEventListener("click", guitarRig);
